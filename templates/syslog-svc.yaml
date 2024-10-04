@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: syslog-svc
+spec:
+  type: ClusterIP
+  ports:
+  - name: syslog
+    port: 514
+    targetPort: 514
+  selector:
+    app: samurai-falco-syslog

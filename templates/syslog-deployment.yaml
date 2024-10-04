@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syslog-{{ .Release.Name }}
+  namespace: {{ .Release.namespace }}
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: samurai-falco-syslog
+  template:
+    metadata:
+      labels:
+        app: samurai-falco-syslog
+    spec:
+      containers:
+        - name: syslog
+          image: {{ .Values.samurai.image }}
+          imagePullPolicy: Always
+          env:
+            - name: SYSLOG_MAX_SIZE
+              value: "10485760" # 10MB
+            - name: SYSLOG_FLUSH_CACHE_SECONDS
+              value: "60"
+            - name: SYSLOG_DEBUG
+              value: "false"
+            - name: SYSLOG_DELIVERY_METHOD
+              value: "transmitter"
+            - name: SYSLOG_COMPRESS_PAYLOAD
+              value: "true"
+            - name: SYSLOG_COMPRESS_METHOD
+              value: "gzip"
+            - name: SYSLOG_BASEURL
+              value: {{ .Values.samurai.apiurl }}
+            - name: SYSLOG_DEVICE_ID
+              value: {{ .Values.samurai.device_id }}
+            - name: SYSLOG_PASSKEY
+              value: {{ .Values.samurai.passkey }}
+            - name: SYSLOG_APIKEY
+              value: {{ .Values.samurai.apikey }}
+          volumeMounts:
+            - name: syslog-state
+              mountPath: /var/cache/syslog/
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - ps -ef | grep rsyslogd | grep -v grep
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - ps -ef | grep rsyslogd | grep -v grep
+            initialDelaySeconds: 15
+            periodSeconds: 10
+      volumes:
+      - name: syslog-state
+        emptyDir:
+          sizeLimit: 500Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

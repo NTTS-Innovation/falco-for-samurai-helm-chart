@@ -1,0 +1,37 @@
+# Default values for falco-for-samurai-mdr.
+samurai:
+  image: ~
+  device_id: ~
+  passkey: ~
+  apikey: ~
+  apiurl: ~
+  portalurl: ~
+
+# Configuration below this line manages setup of Falco
+falco:
+  falcosidekick:
+    enabled: true
+    config:
+      customfields: "cluster:{{ cluster_name }}"
+      syslog: { "host": "syslog-svc", "port": 514 }
+  tolerations: [{"effect": "NoSchedule", "operator": "Exists"}]  # Run everywhere
+  falco:
+    stdout_output: { "enabled": false } # Don't spam log collection systems with FW alerts
+    rules_files: ["/etc/falco/falco_rules.yaml","/etc/falco/falco_rules.local.yaml","/etc/falco/rules.d", "/etc/falco/falco-rules-overrides.yaml", "/etc/falco/falco-network-montoring.yaml"]
+  falcoctl:
+    config:
+      indexes: [{"name":"falcosecurity","url":"https://falcosecurity.github.io/falcoctl/index.yaml"}, {"name": "nttsecurity", "url": "https://ntts-innovation.github.io/falco-custom-rules/index.yaml"}]
+      artifact:
+        allowedTypes:
+        - rulesfile
+        install:
+          refs: [falco-rules:latest, falco-rules-overrides:develop, falco-network-monitoring:develop]
+        follow:
+          refs: [falco-rules:latest, falco-rules-overrides:develop, falco-network-monitoring:develop]
+          every: 1h
+      registry:
+        auth:
+          basic:
+          - user: nttfacloread
+            password: {{ falco_registry.password }}
+            registry: nttfalcoregistry.azurecr.io

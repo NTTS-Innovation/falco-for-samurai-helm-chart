@@ -1,0 +1,16 @@
+##########################################################
+#                                                        #
+#  Congratulations on installing Falco for Samurai MDR!  #
+#                                                        #
+##########################################################
+
+ A new integration should be visible for cluster "{{ regexFind "[^:]+$" .Values.falco.falcosidekick.config.customfields }}"
+ in the samurai portal. You can check the collector status here
+
+    {{ .Values.samurai.portalurl}}/collectors/{{ .Values.samurai.device_id}}
+
+ The following command can be used to verify status of Falco pods in the cluster:
+
+  kubectl --namespace {{ .Release.Namespace }} get daemonset.apps/{{ .Release.Name }}
+
+

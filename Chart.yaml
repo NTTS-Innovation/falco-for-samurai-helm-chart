@@ -1,0 +1,14 @@
+apiVersion: v2
+name: falco-for-samurai-mdr
+description: Falco with a Samurai MDR collector
+version: 1.0.0
+appVersion: "0.39.1"
+keywords:
+ - monitoring
+ - security
+ - alerting
+home: https://security.ntt/
+dependencies:
+ - name: falco
+   version: 4.15.1
+   repository: https://falcosecurity.github.io/charts
