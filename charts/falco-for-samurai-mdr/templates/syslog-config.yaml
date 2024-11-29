@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: syslog-config
+    namespace: {{ .Release.namespace }}
+data:
+  SYSLOG_MAX_SIZE: "10485760" # 10MB
+  SYSLOG_FLUSH_CACHE_SECONDS: "60"
+  SYSLOG_DEBUG: "false"
+  SYSLOG_DELIVERY_METHOD: "transmitter"
+  SYSLOG_COMPRESS_PAYLOAD: "true"
+  SYSLOG_COMPRESS_METHOD: "gzip"
+  SYSLOG_BASEURL: {{ .Values.samurai.apiurl | default "" }}
+  SYSLOG_DEVICE_ID: {{ .Values.samurai.device_id | default "" }}

@@ -16,29 +16,13 @@ spec:
     spec:
       containers:
         - name: syslog
-          image: {{ .Values.samurai.image }}
+          image: {{ .Values.samurai.image | default "nttsecurityes/cts_syslog:2024.11.19-187"}}
           imagePullPolicy: Always
-          env:
-            - name: SYSLOG_MAX_SIZE
-              value: "10485760" # 10MB
-            - name: SYSLOG_FLUSH_CACHE_SECONDS
-              value: "60"
-            - name: SYSLOG_DEBUG
-              value: "false"
-            - name: SYSLOG_DELIVERY_METHOD
-              value: "transmitter"
-            - name: SYSLOG_COMPRESS_PAYLOAD
-              value: "true"
-            - name: SYSLOG_COMPRESS_METHOD
-              value: "gzip"
-            - name: SYSLOG_BASEURL
-              value: {{ .Values.samurai.apiurl }}
-            - name: SYSLOG_DEVICE_ID
-              value: {{ .Values.samurai.device_id }}
-            - name: SYSLOG_PASSKEY
-              value: {{ .Values.samurai.passkey }}
-            - name: SYSLOG_APIKEY
-              value: {{ .Values.samurai.apikey }}
+          envFrom:
+            - configMapRef:
+                name: syslog-config
+            - secretRef:
+                name: syslog-secret
           volumeMounts:
             - name: syslog-state
               mountPath: /var/cache/syslog/
