@@ -2,6 +2,24 @@ apiVersion: v1
 entries:
   falco-for-samurai-mdr:
   - apiVersion: v2
+    appVersion: 0.40.0
+    created: "2025-02-25T09:33:30.664300206Z"
+    dependencies:
+    - name: falco
+      repository: https://falcosecurity.github.io/charts
+      version: 4.20.1
+    description: Falco with a Samurai MDR collector
+    digest: dba970e7d2a03cf6abc17220b9aa1f630df8433308234f1ee5825882ae6d6bb3
+    home: https://security.ntt/
+    keywords:
+    - monitoring
+    - security
+    - alerting
+    name: falco-for-samurai-mdr
+    urls:
+    - https://github.com/NTTS-Innovation/falco-for-samurai-helm-chart/releases/download/falco-for-samurai-mdr-1.2.0/falco-for-samurai-mdr-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
     appVersion: 0.39.1
     created: "2024-11-29T15:03:45.92472066Z"
     dependencies:
@@ -37,4 +55,4 @@ entries:
     urls:
     - https://github.com/NTTS-Innovation/falco-for-samurai-helm-chart/releases/download/falco-for-samurai-mdr-1.0.0/falco-for-samurai-mdr-1.0.0.tgz
     version: 1.0.0
-generated: "2024-11-29T15:03:45.924733694Z"
+generated: "2025-02-25T09:33:30.664322217Z"
