@@ -1,7 +1,7 @@
 apiVersion: v2
 name: falco-for-samurai-mdr
 description: Falco with a Samurai MDR collector
-version: 1.2.0
+version: 1.2.1
 appVersion: "0.40.0"
 keywords:
  - monitoring
