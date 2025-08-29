@@ -3,6 +3,14 @@
 This file documents all notable changes to Falco for Samurai Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.3.0
+
+ * Update to use upstream chart v6.2.5
+
+## v1.2.2
+
+ * Update to use upstream chart v4.21.3
+
 ## v1.2.1
 
  * Update release script
