@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: syslog
-          image: {{ .Values.samurai.image | default "nttsecurityes/cts_syslog:2024.11.19-187"}}
+          image: {{ .Values.samurai.image | default "nttsecurityes/cts_syslog:2025.08.05-245-prod"}}
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
